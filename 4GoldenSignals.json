@@ -1,0 +1,102 @@
+{
+    "annotations": {
+        "list": []
+    },
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 0,
+    "id": null,
+    "iteration": 169,
+    "links": [],
+    "panels": [
+        {
+            "type": "graph",
+            "title": "Request Latency (95th percentile)",
+            "targets": [
+                {
+                    "expr": "histogram_quantile(0.95, sum(rate(request_latency_seconds_bucket[1m])) by (le, endpoint))",
+                    "legendFormat": "{{endpoint}}",
+                    "refId": "A"
+                }
+            ],
+            "xaxis": {
+                "show": true
+            },
+            "yaxis": {
+                "show": true,
+                "format": "s"
+            }
+        },
+        {
+            "type": "graph",
+            "title": "Traffic (Requests per second)",
+            "targets": [
+                {
+                    "expr": "sum(rate(request_count[1m])) by (endpoint)",
+                    "legendFormat": "{{endpoint}}",
+                    "refId": "B"
+                }
+            ],
+            "xaxis": {
+                "show": true
+            },
+            "yaxis": {
+                "show": true,
+                "format": "req/s"
+            }
+        },
+        {
+            "type": "graph",
+            "title": "Errors (Requests per second)",
+            "targets": [
+                {
+                    "expr": "sum(rate(error_count[1m])) by (endpoint)",
+                    "legendFormat": "{{endpoint}}",
+                    "refId": "C"
+                }
+            ],
+            "xaxis": {
+                "show": true
+            },
+            "yaxis": {
+                "show": true,
+                "format": "req/s"
+            }
+        },
+        {
+            "type": "graph",
+            "title": "Active Requests (Saturation)",
+            "targets": [
+                {
+                    "expr": "active_requests",
+                    "legendFormat": "{{endpoint}}",
+                    "refId": "D"
+                }
+            ],
+            "xaxis": {
+                "show": true
+            },
+            "yaxis": {
+                "show": true,
+                "format": "short"
+            }
+        }
+    ],
+    "schemaVersion": 37,
+    "style": "dark",
+    "tags": [
+        "fastapi",
+        "golden_signals"
+    ],
+    "templating": {
+        "list": []
+    },
+    "time": {
+        "from": "now-1h",
+        "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "browser",
+    "title": "FastAPI Golden Signals",
+    "version": 1
+}
